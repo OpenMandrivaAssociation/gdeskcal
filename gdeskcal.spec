@@ -1,79 +1,62 @@
-%define name gdeskcal
-%define version 0.57.1
-%define tarball_version 0_57_1
-%define release 2mdk
+Name:           gdeskcal
+Version:        1.01
+Release:        %mkrel 1 
+Summary:        Eye-candy calendar for your desktop
+Group:          User Interface/Desktops
+License:        GPL
+URL:            http://www.pycage.de/
+Source0:        http://www.pycage.de/download/gDeskCal-%{version}.tar.gz
+Source1:        gdeskcal.png
+Source2:        gdeskcal.desktop
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
-Name:		%{name}
-Summary:	Eye-candy calendar for GNOME desktop
-Version:	%{version}
-Release:	%{release}
-Url:		http://www.pycage.de/software_gdeskcal.html
-Source:		http://www.pycage.de/download/gDeskCal-%tarball_version.tar.gz
-Patch0:		gdeskcal-0.57.1-deprecate.patch.bz2
-Group:		Graphical desktop/GNOME
-License:	GPL
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildArch:	noarch
-Requires:	pygtk2.0 >= 2.3.90
-Requires:	gnome-python-gconf
+BuildRequires:  desktop-file-utils, pygtk2.0-devel, perl(XML::Parser), gettext
+Requires:       pygtk2 
+Requires:       python 
+
+BuildArch:      noarch
+Provides:       gDeskCal = %{version}-%{release}
 
 %description
-gDeskCal is a cute little eye-candy calendar for your desktop.
-It features transparency with smooth alpha-blending
-and its appearance can be changed completely by using skins.
-It can also read and display your Evolution appointments, if available.
+gDeskCal is a cute little eye-candy calendar for your desktop.  It features
+transparency with smooth alpha-blending and its appearance can be changed
+completely by using skins.
+
 
 %prep
 %setup -q -n gDeskCal-%{version}
-# don't use backup extension, otherwise backup files will be installed too
-%patch0 -p1
 
 %build
+%configure
+make 
+# no multi build as it's annoying the buildsys
 
 %install
-rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT%_datadir/gdeskcal/
-cp -a gdeskcal code data locale skins $RPM_BUILD_ROOT%_datadir/gdeskcal/
-# fix bad permission
-chmod +r $RPM_BUILD_ROOT%_datadir/gdeskcal/locale/lt/LC_MESSAGES/gdeskcal.mo
-mkdir -p $RPM_BUILD_ROOT%_bindir/
-ln -s %_datadir/gdeskcal/gdeskcal $RPM_BUILD_ROOT%_bindir/gdeskcal
+rm -rf %{buildroot}
+install -p -D -m0644 %{SOURCE1} %{buildroot}/%{_datadir}/pixmaps/gdeskcal.png
+make DESTDIR=%{buildroot} install
+
+desktop-file-install 					\
+  --dir ${RPM_BUILD_ROOT}%{_datadir}/applications       \
+  --add-category X-MandrivaLinux                        \
+  %{SOURCE2}
+
+%find_lang %name
+
+%post
+update-desktop-database &> /dev/null ||:
+
+%postun
+update-desktop-database &> /dev/null ||:
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
-%files
-%defattr(-,root,root)
-%doc AUTHORS LICENSE NEWS README README.i18n README.skins
-%_bindir/gdeskcal
-%dir %_datadir/gdeskcal/
-%_datadir/gdeskcal/gdeskcal
-%_datadir/gdeskcal/code
-%_datadir/gdeskcal/data
-%_datadir/gdeskcal/skins
-%dir %_datadir/gdeskcal/locale/
-%lang(ar) %_datadir/gdeskcal/locale/ar
-%lang(bg) %_datadir/gdeskcal/locale/bg
-%lang(cs) %_datadir/gdeskcal/locale/cs
-%lang(de) %_datadir/gdeskcal/locale/de*
-%lang(el) %_datadir/gdeskcal/locale/el
-%lang(es) %_datadir/gdeskcal/locale/es
-%lang(fi) %_datadir/gdeskcal/locale/fi
-%lang(fr) %_datadir/gdeskcal/locale/fr
-%lang(he) %_datadir/gdeskcal/locale/he
-%lang(hu) %_datadir/gdeskcal/locale/hu
-%lang(is) %_datadir/gdeskcal/locale/is
-%lang(it) %_datadir/gdeskcal/locale/it
-%lang(ja) %_datadir/gdeskcal/locale/ja
-%lang(ko) %_datadir/gdeskcal/locale/ko
-%lang(lt) %_datadir/gdeskcal/locale/lt
-%lang(nl) %_datadir/gdeskcal/locale/nl
-%lang(no) %_datadir/gdeskcal/locale/no
-%lang(pl) %_datadir/gdeskcal/locale/pl
-%lang(ru) %_datadir/gdeskcal/locale/ru
-%lang(sk) %_datadir/gdeskcal/locale/sk
-%lang(sr) %_datadir/gdeskcal/locale/sr
-%lang(sv) %_datadir/gdeskcal/locale/sv
-%lang(tr) %_datadir/gdeskcal/locale/tr
-%lang(uk) %_datadir/gdeskcal/locale/uk
-%lang(zh) %_datadir/gdeskcal/locale/zh*
+%files -f %{name}.lang
+%defattr(-,root,root,-)
+%doc AUTHORS NEWS README 
+%{_bindir}/gdeskcal
+%{_datadir}/applications/%{name}.desktop
+%exclude %{_datadir}/applications/%{name}.desktop
+%{_datadir}/pixmaps/%{name}.png
+%{_libdir}/%{name}/
