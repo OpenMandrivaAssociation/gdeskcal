@@ -2,7 +2,7 @@ Name:           gdeskcal
 Version:        1.01
 Release:        %mkrel 1 
 Summary:        Eye-candy calendar for your desktop
-Group:          User Interface/Desktops
+Group:          Graphical desktop/GNOME
 License:        GPL
 URL:            http://www.pycage.de/
 Source0:        http://www.pycage.de/download/gDeskCal-%{version}.tar.gz
