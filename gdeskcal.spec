@@ -8,6 +8,7 @@ URL:            http://www.pycage.de/
 Source0:        http://www.pycage.de/download/gDeskCal-%{version}.tar.gz
 Source1:        gdeskcal.png
 Source2:        gdeskcal.desktop
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 BuildRequires:  desktop-file-utils, pygtk2.0-devel, perl(XML::Parser), gettext
 Requires:       pygtk2.0 
