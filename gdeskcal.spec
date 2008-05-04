@@ -1,6 +1,6 @@
 Name:           gdeskcal
 Version:        1.01
-Release:        %mkrel 2
+Release:        %mkrel 3
 Summary:        Eye-candy calendar for your desktop
 Group:          Graphical desktop/GNOME
 License:        GPL
@@ -8,6 +8,7 @@ URL:            http://www.pycage.de/
 Source0:        http://www.pycage.de/download/gDeskCal-%{version}.tar.gz
 Source1:        gdeskcal.png
 Source2:        gdeskcal.desktop
+Patch0:		gdeskcal-1.0.1-fix-source-encoding.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 BuildRequires:  desktop-file-utils, pygtk2.0-devel, perl(XML::Parser), gettext
@@ -25,6 +26,7 @@ completely by using skins.
 
 %prep
 %setup -q -n gDeskCal-%{version}
+%patch0 -p0
 
 %build
 %configure
@@ -38,7 +40,6 @@ make DESTDIR=%{buildroot} install
 
 desktop-file-install 					\
   --dir ${RPM_BUILD_ROOT}%{_datadir}/applications       \
-  --add-category X-MandrivaLinux                        \
   %{SOURCE2}
 
 %find_lang %name
