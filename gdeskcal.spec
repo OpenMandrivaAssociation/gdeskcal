@@ -1,6 +1,6 @@
 Name:           gdeskcal
 Version:        1.01
-Release:        %mkrel 3
+Release:        %mkrel 2
 Summary:        Eye-candy calendar for your desktop
 Group:          Graphical desktop/GNOME
 License:        GPL
@@ -15,7 +15,6 @@ BuildRequires:  desktop-file-utils, pygtk2.0-devel, perl(XML::Parser), gettext
 Requires:       pygtk2.0 
 Requires:       python 
 
-BuildArch:      noarch
 Provides:       gDeskCal = %{version}-%{release}
 
 %description
