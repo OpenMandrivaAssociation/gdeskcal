@@ -1,6 +1,6 @@
 Name:           gdeskcal
 Version:        1.01
-Release:        %mkrel 4
+Release:        %mkrel 5
 Summary:        Eye-candy calendar for your desktop
 Group:          Graphical desktop/GNOME
 License:        GPL
