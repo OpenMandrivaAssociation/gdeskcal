@@ -1,0 +1,8 @@
+--- code/values.py~	2007-03-01 09:39:38.000000000 +0100
++++ code/values.py	2008-05-04 17:35:48.000000000 +0200
+@@ -1,3 +1,5 @@
++#! /usr/bin/python
++# coding: utf-8
+ NAME = "gDeskCal"
+ VERSION = "1.01"
+ AUTHOR = "Martin Grimme  <martin.grimme@lintegra.de>"
