@@ -1,6 +1,6 @@
 Name:           gdeskcal
 Version:        1.01
-Release:        %mkrel 7
+Release:        6
 Summary:        Eye-candy calendar for your desktop
 Group:          Graphical desktop/GNOME
 License:        GPL
@@ -9,9 +9,10 @@ Source0:        http://www.pycage.de/download/gDeskCal-%{version}.tar.gz
 Source1:        gdeskcal.png
 Source2:        gdeskcal.desktop
 Patch0:		gdeskcal-1.0.1-fix-source-encoding.patch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-
-BuildRequires:  desktop-file-utils, pygtk2.0-devel, perl(XML::Parser), gettext
+BuildRequires:  desktop-file-utils 
+BuildRequires:  pygtk2.0-devel
+BuildRequires:  perl(XML::Parser)
+BuildRequires:  gettext
 Requires:       pygtk2.0 
 Requires:       python 
 
@@ -33,7 +34,7 @@ make
 # no multi build as it's annoying the buildsys
 
 %install
-rm -rf %{buildroot}
+
 install -p -D -m0644 %{SOURCE1} %{buildroot}/%{_datadir}/pixmaps/gdeskcal.png
 make DESTDIR=%{buildroot} install
 
@@ -43,20 +44,14 @@ desktop-file-install 					\
 
 %find_lang %name
 
-%post
-update-desktop-database &> /dev/null ||:
-
-%postun
-update-desktop-database &> /dev/null ||:
-
-%clean
-rm -rf %{buildroot}
 
 %files -f %{name}.lang
 %defattr(-,root,root,-)
 %doc AUTHORS NEWS README 
 %{_bindir}/gdeskcal
 %{_datadir}/applications/%{name}.desktop
-%exclude %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
 %{_libdir}/%{name}/
+
+
+

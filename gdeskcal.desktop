@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=gDeskcal
+Comment=A desktop calendar
+Exec=gdeskcal
+Icon=gdeskcal
+Terminal=false
+Type=Application
+Categories=Application;Utility;
+StartupNotify=true
