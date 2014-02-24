@@ -1,57 +1,53 @@
-Name:           gdeskcal
-Version:        1.01
-Release:        6
-Summary:        Eye-candy calendar for your desktop
-Group:          Graphical desktop/GNOME
-License:        GPL
-URL:            http://www.pycage.de/
-Source0:        http://www.pycage.de/download/gDeskCal-%{version}.tar.gz
-Source1:        gdeskcal.png
-Source2:        gdeskcal.desktop
-Patch0:		gdeskcal-1.0.1-fix-source-encoding.patch
-BuildRequires:  desktop-file-utils 
-BuildRequires:  pygtk2.0-devel
-BuildRequires:  perl(XML::Parser)
-BuildRequires:  gettext
-Requires:       pygtk2.0 
-Requires:       python 
+%define _enable_debug_packages %{nil}
+%define debug_package %{nil}
 
-Provides:       gDeskCal = %{version}-%{release}
+Summary:	Eye-candy calendar for your desktop
+Name:		gdeskcal
+Version:	1.01
+Release:	7
+License:	GPLv2+
+Group:		Graphical desktop/GNOME
+Url:		http://www.pycage.de/
+Source0:	http://www.pycage.de/download/gDeskCal-%{version}.tar.gz
+Source1:	gdeskcal.png
+Source2:	gdeskcal.desktop
+Patch0:		gdeskcal-1.0.1-fix-source-encoding.patch
+BuildRequires:	desktop-file-utils
+BuildRequires:	perl(XML::Parser)
+BuildRequires:	pkgconfig(pygtk-2.0)
+Requires:	pygtk2.0
+Provides:	gDeskCal = %{EVRD}
 
 %description
-gDeskCal is a cute little eye-candy calendar for your desktop.  It features
+gDeskCal is a cute little eye-candy calendar for your desktop. It features
 transparency with smooth alpha-blending and its appearance can be changed
 completely by using skins.
 
+%files -f %{name}.lang
+%doc AUTHORS NEWS README
+%{_bindir}/gdeskcal
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/pixmaps/%{name}.png
+%{_libdir}/%{name}/
+
+#----------------------------------------------------------------------------
 
 %prep
 %setup -q -n gDeskCal-%{version}
 %patch0 -p0
 
 %build
-%configure
-make 
+%configure2_5x
+make
 # no multi build as it's annoying the buildsys
 
 %install
-
 install -p -D -m0644 %{SOURCE1} %{buildroot}/%{_datadir}/pixmaps/gdeskcal.png
-make DESTDIR=%{buildroot} install
+%makeinstall_std
 
-desktop-file-install 					\
-  --dir ${RPM_BUILD_ROOT}%{_datadir}/applications       \
-  %{SOURCE2}
+desktop-file-install \
+	--dir ${RPM_BUILD_ROOT}%{_datadir}/applications \
+	%{SOURCE2}
 
-%find_lang %name
-
-
-%files -f %{name}.lang
-%defattr(-,root,root,-)
-%doc AUTHORS NEWS README 
-%{_bindir}/gdeskcal
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/pixmaps/%{name}.png
-%{_libdir}/%{name}/
-
-
+%find_lang %{name}
 
