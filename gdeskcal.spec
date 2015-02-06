@@ -4,7 +4,7 @@
 Summary:	Eye-candy calendar for your desktop
 Name:		gdeskcal
 Version:	1.01
-Release:	7
+Release:	8
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
 Url:		http://www.pycage.de/
