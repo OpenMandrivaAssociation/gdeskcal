@@ -7,7 +7,7 @@ Version:	1.01
 Release:	8
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
-Url:		http://www.pycage.de/
+Url:		https://www.pycage.de/
 Source0:	http://www.pycage.de/download/gDeskCal-%{version}.tar.gz
 Source1:	gdeskcal.png
 Source2:	gdeskcal.desktop
