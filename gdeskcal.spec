@@ -12,6 +12,11 @@ Source0:	http://www.pycage.de/download/gDeskCal-%{version}.tar.gz
 Source1:	gdeskcal.png
 Source2:	gdeskcal.desktop
 Patch0:		gdeskcal-1.0.1-fix-source-encoding.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	desktop-file-utils
 BuildRequires:	perl(XML::Parser)
 BuildRequires:	pkgconfig(pygtk-2.0)
